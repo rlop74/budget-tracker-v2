@@ -1,7 +1,7 @@
 // src/pages/Analytics.jsx
 import { MoneyFlowChart } from "../components/MoneyFlowChart";
 import { SpendingPieChart } from "../components/SpendingPieChart";
-import { useExpenses } from "../stores/expenses-store";
+import { useExpenses } from "../store/expenses-store";
 
 export const Analytics = () => {
     const totalExpense = useExpenses((state) => state.totalExpense);

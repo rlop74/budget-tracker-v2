@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useAccountInfo } from "../hooks/getAccountInfo";
-import { useBills } from "../stores/bills-store";
+import { useBills } from "../store/bills-store";
 import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
-import { addBills } from "../services/bills-api";
+import { addBill } from "../services/bills-api";
 import { Dialog } from "../components/Dialog";
 
 export const Bills = () => {
@@ -31,7 +31,7 @@ export const Bills = () => {
             return;
         }
 
-        const data = await addBills(newBill);
+        const data = await addBill(newBill);
         if (!data) return;
         addNewBill(data);
 

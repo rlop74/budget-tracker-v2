@@ -1,5 +1,5 @@
 // src/pages/Settings.jsx
-import { useUserStore } from "../stores/user-store";
+import { useUserStore } from "../store/user-store";
 
 export const Settings = () => {
     const user = useUserStore((state) => state.user);

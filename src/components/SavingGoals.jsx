@@ -1,4 +1,4 @@
-import { useGoals } from "../stores/goals-store";
+import { useGoals } from "../store/goals-store";
 
 export const SavingGoals = () => {
     const allGoals = useGoals((state) => state.allGoals);

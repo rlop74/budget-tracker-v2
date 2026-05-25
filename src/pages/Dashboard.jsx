@@ -10,12 +10,12 @@ import { MoneyFlowChart } from "../components/MoneyFlowChart";
 import { SpendingPieChart } from "../components/SpendingPieChart";
 import { SavingGoals } from "../components/SavingGoals";
 
-import { useExpenses } from "../stores/expenses-store";
-import { useSavings } from "../stores/savings-store";
-import { useUserStore } from "../stores/user-store";
+import { useExpenses } from "../store/expenses-store";
+import { useSavings } from "../store/savings-store";
+import { useUserStore } from "../store/user-store";
 import { Dialog } from "../components/Dialog";
 import { useAccountInfo } from "../hooks/getAccountInfo";
-import { useAppStore } from "../stores/app-store";
+import { useAppStore } from "../store/app-store";
 import { addExpense } from "../services/expenses-api";
 import { addSavings } from "../services/savings-api";
 import { updateIncome } from "../services/income-api";

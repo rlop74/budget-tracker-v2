@@ -1,6 +1,6 @@
 import { Home, Utensils, Car, Popcorn, Wallet } from "lucide-react";
-import { useBudget } from "../stores/budget-store";
-import { useExpenses } from "../stores/expenses-store";
+import { useBudget } from "../store/budget-store";
+import { useExpenses } from "../store/expenses-store";
 
 export const Budget = () => {
     const allBudgets = useBudget((state) => state.allBudgets);

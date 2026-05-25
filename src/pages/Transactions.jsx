@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useAppStore } from "../stores/app-store";
+import { useAppStore } from "../store/app-store";
 import { formatDate } from "../services/format-date"; // date-fns
 import { Search } from "lucide-react";
 

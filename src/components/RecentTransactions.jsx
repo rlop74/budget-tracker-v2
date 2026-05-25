@@ -1,5 +1,5 @@
 import { formatDate } from "../services/format-date";
-import { useAppStore } from "../stores/app-store";
+import { useAppStore } from "../store/app-store";
 
 export const RecentTransactions = () => {
     const transactions = useAppStore((state) => state.allTransactions)

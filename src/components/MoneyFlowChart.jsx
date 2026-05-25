@@ -8,7 +8,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 
-import { useAppStore } from "../stores/app-store";
+import { useAppStore } from "../store/app-store";
 import { groupTransactionsByMonth } from "../services/group-transactions";
 
 export const MoneyFlowChart = () => {

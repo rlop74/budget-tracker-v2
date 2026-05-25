@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Search, Bell } from "lucide-react";
-import { useUserStore } from "../stores/user-store";
+import { useUserStore } from "../store/user-store";
 
 export const Header = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);

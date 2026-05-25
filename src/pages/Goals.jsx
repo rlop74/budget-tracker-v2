@@ -1,8 +1,8 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Dialog } from "../components/Dialog";
-import { useGoals } from "../stores/goals-store";
-import { useAppStore } from "../stores/app-store";
+import { useGoals } from "../store/goals-store";
+import { useAppStore } from "../store/app-store";
 import axios from "axios";
 
 export const Goals = () => {
