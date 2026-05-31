@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { AddExpenseDialog } from "./AddExpenseDialog";
-import { useUserStore } from "../stores/user-store";
-import { useExpenses } from "../stores/expenses-store";
-import { useAppStore } from "../stores/app-store";
+import { useUserStore } from "../store/user-store";
+import { useExpenses } from "../store/expenses-store";
+import { useAppStore } from "../store/app-store";
 import { useAccountInfo } from "../hooks/getAccountInfo";
 import { addExpense } from "../services/expenses-api";
 

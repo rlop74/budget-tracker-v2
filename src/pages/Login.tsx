@@ -1,0 +1,93 @@
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import { useUserStore } from '@/store/user-store';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+
+export const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const setUser = useUserStore((state) => state.setUser);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // prevent page reload on submit
+    try {
+      setLoading(true);
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) {
+        console.error(error);
+        alert(error.message);
+        setLoading(false);
+        return;
+      }
+
+      const { data: profile } = await axios.get(
+        `http://localhost:3000/users/${data.user.id}`,
+      );
+
+      if (!profile) {
+        setLoading(false);
+        alert('Cannot load profile');
+        return;
+      }
+
+      setUser(profile); // set user to public table's data
+      navigate('/dashboard'); // redirect to /dashboard
+    } catch (err) {
+      console.error('Login failed: ', err);
+      alert('Something went wrong');
+      if (err instanceof Error) throw err;
+      throw new Error('Failed to login');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form
+        onSubmit={handleLogin}
+        className="bg-white p-8 rounded shadow-md w-96"
+      >
+        <h2 className="text-2xl text-gray-800 font-bold mb-6">Login</h2>
+
+        <input
+          type="email"
+          placeholder="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 border-2 border-gray-400 rounded mb-6"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 border-2 border-gray-400 rounded mb-6"
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-violet-500 text-white py-2 rounded cursor-pointer"
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+
+        <p className="text-center mt-2">
+          Don't have an account?{' '}
+          <Link to="/sign-up" className="text-blue-500 hover:text-blue-300">
+            Sign Up
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
+};
