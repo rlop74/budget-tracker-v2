@@ -21,6 +21,7 @@ type MonthlyTransactionGroup = {
   created_at: string | number | Date;
 };
 
+// WILL ADD INCOME LATER
 export const groupTransactionsByMonth = (
   transactions: TransactionForMonthlyGroup[],
 ) => {

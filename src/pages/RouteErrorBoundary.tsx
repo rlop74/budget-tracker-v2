@@ -1,4 +1,4 @@
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
 
 function RouteErrorBoundary() {
   const error = useRouteError();
@@ -7,7 +7,9 @@ function RouteErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <div>
-        <h1>{error.status} {error.statusText}</h1>
+        <h1>
+          {error.status} {error.statusText}
+        </h1>
         <p>{error.data}</p>
       </div>
     );
@@ -28,3 +30,4 @@ function RouteErrorBoundary() {
 }
 
 export default RouteErrorBoundary;
+

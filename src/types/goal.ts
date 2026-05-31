@@ -5,3 +5,15 @@ export type Goal = {
   current_amount: number;
   target_amount: number;
 };
+
+export type NewGoalForm = {
+  name: string;
+  target_amount: number;
+};
+
+export type EditableGoal = {
+  id: string | number;
+  name: string;
+  target_amount: number;
+  current_amount: number;
+}

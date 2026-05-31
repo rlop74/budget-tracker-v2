@@ -4,7 +4,7 @@ export type UserProfile = {
   auth_id: string | number;
   first_name?: string;
   last_name?: string;
-  income: number;
+  income: string | number;
   email?: string;
   img: string;
 };

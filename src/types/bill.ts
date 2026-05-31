@@ -5,5 +5,5 @@ export type NewBill = {
 
 export type Bill = NewBill & {
   id: string | number;
-  created_at: string | number | Date;
+  created_at?: string | number | Date;
 };

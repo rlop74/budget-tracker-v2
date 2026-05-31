@@ -1,5 +1,5 @@
 export type NewSavings = {
-  user_id: string | number;
+  user_id?: string | number;
   amount: string | number;
 };
 

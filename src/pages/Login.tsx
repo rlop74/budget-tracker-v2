@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { supabase } from "../lib/supabase";
-import { useUserStore } from "../store/user-store";
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import { useUserStore } from '@/store/user-store';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const setUser = useUserStore((state) => state.setUser);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent page reload on submit
     try {
       setLoading(true);
@@ -29,20 +29,22 @@ export const Login = () => {
       }
 
       const { data: profile } = await axios.get(
-        `http://localhost:3000/users/${data.user.id}`
+        `http://localhost:3000/users/${data.user.id}`,
       );
 
       if (!profile) {
         setLoading(false);
-        alert("Cannot load profile");
+        alert('Cannot load profile');
         return;
       }
 
       setUser(profile); // set user to public table's data
-      navigate("/dashboard"); // redirect to /dashboard
+      navigate('/dashboard'); // redirect to /dashboard
     } catch (err) {
-      alert("Something went wrong");
-      throw new Error(err);
+      console.error('Login failed: ', err);
+      alert('Something went wrong');
+      if (err instanceof Error) throw err;
+      throw new Error('Failed to login');
     } finally {
       setLoading(false);
     }
@@ -76,15 +78,12 @@ export const Login = () => {
           type="submit"
           className="w-full bg-violet-500 text-white py-2 rounded cursor-pointer"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? 'Logging in...' : 'Login'}
         </button>
 
         <p className="text-center mt-2">
-          Don't have an account?{" "}
-          <Link
-            to="/sign-up"
-            className="text-blue-500 hover:text-blue-300"
-          >
+          Don't have an account?{' '}
+          <Link to="/sign-up" className="text-blue-500 hover:text-blue-300">
             Sign Up
           </Link>
         </p>

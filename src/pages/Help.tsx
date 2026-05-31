@@ -1,10 +1,19 @@
 export const Help = () => {
   const faqs = [
-    { q: "How do I add a transaction?", a: "Go to Dashboard and click '+ Add expense' or '+ Add savings'" },
-    { q: "Can I edit or delete transactions?", a: "Coming soon!" },
-    { q: "Is my data secure?", a: "Yes! We use Supabase authentication and Row Level Security" },
-    { q: "How do I change my income?", a: "Click 'Update income' on the Dashboard" },
-    { q: "Can I export my data?", a: "Feature coming soon" },
+    {
+      q: 'How do I add a transaction?',
+      a: "Go to Dashboard and click '+ Add expense' or '+ Add savings'",
+    },
+    { q: 'Can I edit or delete transactions?', a: 'Coming soon!' },
+    {
+      q: 'Is my data secure?',
+      a: 'Yes! We use Supabase authentication and Row Level Security',
+    },
+    {
+      q: 'How do I change my income?',
+      a: "Click 'Update income' on the Dashboard",
+    },
+    { q: 'Can I export my data?', a: 'Feature coming soon' },
   ];
 
   return (
@@ -29,3 +38,4 @@ export const Help = () => {
     </div>
   );
 };
+

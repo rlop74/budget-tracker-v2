@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const updateIncome = async (
   amount: string | number,
-  id: string,
+  id: string | number,
 ): Promise<void> => {
   try {
     // update income

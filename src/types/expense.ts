@@ -1,5 +1,5 @@
 export type NewExpense = {
-  user_id: string | number;
+  user_id?: string | number;
   name: string;
   amount: string | number;
   category: string;
