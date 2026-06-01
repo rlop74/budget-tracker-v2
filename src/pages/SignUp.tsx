@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
-import { useAppStore } from '@/store/app-store';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const loading = useAppStore((state) => state.loading);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setIsSubmitting(true);
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -37,6 +38,8 @@ export const SignUp = () => {
       alert('Something went wrong');
       if (err instanceof Error) throw err;
       throw new Error('Sign up failed');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -84,7 +87,7 @@ export const SignUp = () => {
           type="submit"
           className="w-full bg-violet-500 text-white py-2 rounded cursor-pointer"
         >
-          {loading ? 'Signing up...' : 'Sign Up'}
+          {isSubmitting ? 'Signing up...' : 'Sign Up'}
         </button>
 
         <p className="text-center mt-2">
