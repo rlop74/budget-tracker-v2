@@ -3,7 +3,7 @@ import { useExpenses } from '@/store/expenses-store';
 import { useSavings } from '@/store/savings-store';
 import { fetchExpenses } from '@/services/expenses-api';
 import { fetchSavings } from '@/services/savings-api';
-import { useAppStore } from '@/store/app-store';
+import { useAccountDataStore } from '@/store/accountDataStore';
 import { useUserStore } from '@/store/user-store';
 import { useBills } from '@/store/bills-store';
 import { fetchBills } from '@/services/bills-api';
@@ -14,14 +14,20 @@ import { fetchBudget } from '@/services/budget-api';
 
 export const useAccountInfo = () => {
   const user = useUserStore((state) => state.user);
-  const loading = useAppStore((state) => state.loading);
-  const setLoading = useAppStore((state) => state.setLoading);
+  const isAccountDataLoading = useAccountDataStore(
+    (state) => state.isAccountDataLoading,
+  );
+  const setIsAccountDataLoading = useAccountDataStore(
+    (state) => state.setIsAccountDataLoading,
+  );
   const setAllExpenses = useExpenses((state) => state.setAllExpenses);
   const setTotalExpense = useExpenses((state) => state.setTotalExpense);
   const setSavings = useSavings((state) => state.setSavings);
   const setTotalSavings = useSavings((state) => state.setTotalSavings);
-  const allTransactions = useAppStore((state) => state.allTransactions);
-  const setAllTransactions = useAppStore((state) => state.setAllTransactions);
+  const allTransactions = useAccountDataStore((state) => state.allTransactions);
+  const setAllTransactions = useAccountDataStore(
+    (state) => state.setAllTransactions,
+  );
   const setAllBills = useBills((state) => state.setAllBills);
   const setTotalBills = useBills((state) => state.setTotalBills);
   const setAllGoals = useGoals((state) => state.setAllGoals);
@@ -30,14 +36,18 @@ export const useAccountInfo = () => {
   useEffect(() => {
     if (!user) return;
 
-    const loadTransactions = async (userId: string | number) => {
+    const loadAccountData = async (userId: string | number) => {
       try {
+        setIsAccountDataLoading(true);
+
+        // fetch account data
         const savingsData = await fetchSavings(userId);
         const expenseData = await fetchExpenses(userId);
         const billsData = await fetchBills();
         const goalsData = await fetchGoals();
         const budgetData = await fetchBudget();
 
+        // populate stores
         setAllExpenses(expenseData);
         setTotalExpense(expenseData);
         setTotalSavings(savingsData);
@@ -51,12 +61,12 @@ export const useAccountInfo = () => {
         console.error('Failed to load account info: ', err);
         alert('Something went wrong');
       } finally {
-        setLoading(false);
+        setIsAccountDataLoading(false);
       }
     };
 
     // useEffect callbacks cannot be async, so run the async loader without returning its Promise.
-    void loadTransactions(user.id);
+    void loadAccountData(user.id);
   }, [
     user,
     setAllExpenses,
@@ -68,8 +78,8 @@ export const useAccountInfo = () => {
     setTotalBills,
     setAllGoals,
     setAllBudgets,
-    setLoading,
+    setIsAccountDataLoading,
   ]);
 
-  return { allTransactions, loading, user };
+  return { allTransactions, isAccountDataLoading, user };
 };

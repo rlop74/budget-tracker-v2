@@ -3,10 +3,13 @@
 // redirect to signup or back to login page
 
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAccountInfo } from '@/hooks/getAccountInfo';
+
+import { useAuthStore } from '@/store/authStore';
+import { useUserStore } from '@/store/user-store';
 
 export const Protected = () => {
-  const { allTransactions, loading, user } = useAccountInfo();
+  const loading = useAuthStore((state) => state.isAuthLoading);
+  const user = useUserStore((state) => state.user);
 
   if (loading) {
     return (
@@ -20,5 +23,5 @@ export const Protected = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet context={{ allTransactions }} />;
+  return <Outlet />;
 };

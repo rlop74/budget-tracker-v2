@@ -2,14 +2,12 @@ import { useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 import axios from 'axios';
 
-import { useAccountInfo } from '@/hooks/getAccountInfo';
 import { useBills } from '@/store/bills-store';
 import { addBill } from '@/services/bills-api';
 import { Dialog } from '@/components/Dialog';
 import type { Bill } from '@/types/bill';
 
 export const Bills = () => {
-  const { loading } = useAccountInfo();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddBillsOpen, setIsAddBillsOpen] = useState(false);
   const [billToEdit, setBillToEdit] = useState<Bill>({
@@ -96,13 +94,9 @@ export const Bills = () => {
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-5">
         <div className="p-6 bg-linear-to-r from-violet-600 to-indigo-600 text-white">
           <p className="text-violet-100 text-lg">Total monthly bills</p>
-          {loading ? (
-            <div className="mt-4 h-10 w-48 bg-white/20 rounded animate-pulse"></div>
-          ) : (
-            <p className="text-4xl font-bold mt-3">
-              ${totalBill.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            </p>
-          )}
+          <p className="text-4xl font-bold mt-3">
+            ${totalBill.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </p>
         </div>
       </div>
 
@@ -110,9 +104,7 @@ export const Bills = () => {
       <div>
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100">
           <div className="divide-y divide-gray-300">
-            {loading ? (
-              <p className="p-8 text-center text-gray-500">Loading bills...</p>
-            ) : allBills.length === 0 ? (
+            {allBills.length === 0 ? (
               <div className="p12 text-center text-gray-500">
                 <p className="text-lg">No bills added yet.</p>
                 <p className="mt-2">Click "Add Bill" to get started.</p>

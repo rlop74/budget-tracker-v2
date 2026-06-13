@@ -5,38 +5,38 @@ import {
   ResponsiveContainer,
   Legend,
   Tooltip,
-} from "recharts";
-import { useAccountInfo } from "@/hooks/getAccountInfo";
+} from 'recharts';
+import { useAccountDataStore } from '@/store/accountDataStore';
 
 type CategoryObj = {
   name: string;
   value: number;
-}
+};
 
 // "an object whose keys are strings and whose values are CategoryObj"
 type CategoryMap = Record<string, CategoryObj>;
 
 const COLORS = [
-  "#8b5cf6",
-  "#3b82f6",
-  "#10b981",
-  "#f59e0b",
-  "#ef4444",
-  "#06b6d4",
-  "#ec4899",
-  "#a78bfa",
-  "#84cc16",
-  "#f97316",
+  '#8b5cf6',
+  '#3b82f6',
+  '#10b981',
+  '#f59e0b',
+  '#ef4444',
+  '#06b6d4',
+  '#ec4899',
+  '#a78bfa',
+  '#84cc16',
+  '#f97316',
 ];
 
 export const SpendingPieChart = () => {
-  const { allTransactions } = useAccountInfo();
+  const allTransactions = useAccountDataStore((state) => state.allTransactions);
   const data = Object.values(
     allTransactions.reduce<CategoryMap>((acc, transaction) => {
       // check if transaction type is expenses, savings don't have categories
-      if (transaction.type === "saving") return acc;
+      if (transaction.type === 'saving') return acc;
 
-      const category = transaction.category || "Other";
+      const category = transaction.category || 'Other';
 
       // check if category exists already
       if (!acc[category]) {
@@ -50,7 +50,7 @@ export const SpendingPieChart = () => {
       acc[category].value += Number(transaction.amount);
 
       return acc;
-    }, {})
+    }, {}),
   );
 
   return (
@@ -66,10 +66,7 @@ export const SpendingPieChart = () => {
           dataKey="value"
         >
           {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={COLORS[index % COLORS.length]}
-            />
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip />

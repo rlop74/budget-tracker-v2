@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import { Dialog } from '@/components/Dialog';
 import { useGoals } from '@/store/goals-store';
-import { useAppStore } from '@/store/app-store';
 
 import type { Goal, NewGoalForm } from '@/types/goal';
 
@@ -18,7 +17,6 @@ export const Goals = () => {
   const allGoals = useGoals((state) => state.allGoals);
   const setAllGoals = useGoals((state) => state.setAllGoals);
   const addNewGoal = useGoals((state) => state.addNewGoal);
-  const loading = useAppStore((state) => state.loading);
 
   // empty states for adding and editing
   const [newGoal, setNewGoal] = useState<NewGoalForm>({
@@ -138,21 +136,7 @@ export const Goals = () => {
         </button>
       </div>
 
-      {loading ? (
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-4">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-violet-500"></div>
-            </div>
-            <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
-              Loading...
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              Please wait while we prepare everything
-            </p>
-          </div>
-        </div>
-      ) : allGoals.length === 0 ? (
+      {allGoals.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           <p className="text-2xl mb-4">No goals yet</p>
           <p>Create your first saving goal to get started!</p>

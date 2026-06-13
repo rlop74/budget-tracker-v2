@@ -1,12 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 
-import { useAppStore } from '@/store/app-store';
+import { useAccountDataStore } from '@/store/accountDataStore';
 import { formatDate } from '@/services/format-date'; // date-fns
 
 export const Transactions = () => {
-  const loading = useAppStore((state) => state.loading);
-  const allTransactions = useAppStore((state) => state.allTransactions);
+  const allTransactions = useAccountDataStore((state) => state.allTransactions);
 
   // Search and filter state
   const [searchTerm, setSearchTerm] = useState('');
@@ -191,16 +190,7 @@ export const Transactions = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {loading ? (
-                <tr>
-                  <td
-                    colSpan={4}
-                    className="px-6 py-12 text-center text-gray-500"
-                  >
-                    Loading transactions...
-                  </td>
-                </tr>
-              ) : filteredAndSortedTransactions.length === 0 ? (
+              {filteredAndSortedTransactions.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="py-12 text-center text-gray-500">
                     {searchTerm || typeFilter !== 'all'

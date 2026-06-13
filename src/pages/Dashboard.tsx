@@ -14,15 +14,14 @@ import { useExpenses } from '@/store/expenses-store';
 import { useSavings } from '@/store/savings-store';
 import { useUserStore } from '@/store/user-store';
 import { Dialog } from '@/components/Dialog';
-import { useAccountInfo } from '@/hooks/getAccountInfo';
-import { useAppStore } from '@/store/app-store';
+import { useAccountDataStore } from '@/store/accountDataStore';
 import { addExpense } from '@/services/expenses-api';
 import { addSavings } from '@/services/savings-api';
 import { updateIncome } from '@/services/income-api';
 
 export const Dashboard = () => {
   const { user, setUser } = useUserStore((state) => state);
-  const { allTransactions } = useAccountInfo();
+  const allTransactions = useAccountDataStore((state) => state.allTransactions);
   const [updatedIncome, setUpdatedIncome] = useState('');
 
   // modal states
@@ -35,7 +34,7 @@ export const Dashboard = () => {
   const addNewExpense = useExpenses((state) => state.addNewExpense);
   const totalSavings = useSavings((state) => state.totalSavings);
   const addTotalSavings = useSavings((state) => state.addTotalSavings);
-  const setAllTransactions = useAppStore((state) => state.setAllTransactions);
+  const setAllTransactions = useAccountDataStore((state) => state.setAllTransactions);
 
   // empty states for adding and editing
   const [newExpense, setNewExpense] = useState({
@@ -160,10 +159,7 @@ export const Dashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Money Flow - Larger on big screens */}
           <div className="lg:col-span-2">
-            <LargeCard
-              title="Money Flow"
-              content={<MoneyFlowChart />}
-            />
+            <LargeCard title="Money Flow" content={<MoneyFlowChart />} />
           </div>
 
           {/* Spending Breakdown */}
@@ -184,10 +180,7 @@ export const Dashboard = () => {
 
           {/* Saving Goals */}
           <div className="">
-            <MediumCard
-              title="Saving Goals"
-              content={<SavingGoals />}
-            />
+            <MediumCard title="Saving Goals" content={<SavingGoals />} />
           </div>
         </div>
       </main>

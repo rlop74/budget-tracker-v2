@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { useAppStore } from "@/store/app-store";
+import { useAccountDataStore } from "@/store/accountDataStore";
 import { groupTransactionsByMonth } from "@/services/group-transactions";
 
 const MONTH_ORDER = [
@@ -27,7 +27,7 @@ const MONTH_ORDER = [
 ];
 
 export const MoneyFlowChart = () => {
-  const allTransactions = useAppStore((state) => state.allTransactions);
+  const allTransactions = useAccountDataStore((state) => state.allTransactions);
 
   // Convert to array for chart
   const monthlyData = Object.values(

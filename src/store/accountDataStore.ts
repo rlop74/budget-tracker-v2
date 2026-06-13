@@ -9,19 +9,19 @@ type AppTransaction = {
   category?: string;
 };
 
-type AppStore = {
+type AccountDataStore = {
   allTransactions: AppTransaction[];
-  loading: boolean;
+  isAccountDataLoading: boolean;
   setAllTransactions: (transactionArr: AppTransaction[]) => void;
-  setLoading: (bool: boolean) => void;
+  setIsAccountDataLoading: (bool: boolean) => void;
 };
 
-export const useAppStore = create<AppStore>((set) => ({
+export const useAccountDataStore = create<AccountDataStore>((set) => ({
   allTransactions: [],
-  loading: true,
+  isAccountDataLoading: true,
   setAllTransactions: (transactionsArr) =>
     set({
       allTransactions: transactionsArr,
     }),
-  setLoading: (bool) => set({ loading: bool }),
+  setIsAccountDataLoading: (bool) => set({ isAccountDataLoading: bool }),
 }));

@@ -4,12 +4,12 @@ import { router } from '@/routes/router';
 import { supabase } from '@/lib/supabase';
 // import axios from "axios";
 import { useUserStore } from '@/store/user-store';
-import { useAppStore } from '@/store/app-store';
-import { fetchUser } from './services/user-profile-api';
+import { useAuthStore } from '@/store/authStore';
+import { fetchUser } from '@/services/user-profile-api';
 
 function App() {
   const setUser = useUserStore((state) => state.setUser);
-  const setLoading = useAppStore((state) => state.setLoading);
+  const setIsAuthLoading = useAuthStore((state) => state.setIsAuthLoading);
 
   useEffect(() => {
     const getSession = async () => {
@@ -36,14 +36,14 @@ function App() {
 
         alert('Something went wrong');
       } finally {
-        setLoading(false);
+        setIsAuthLoading(false);
       }
     };
 
     // Run the async session check without returning its Promise from useEffect.
     // useEffect callbacks cannot be async, so run the async session check here.
     void getSession();
-  }, [setLoading, setUser]);
+  }, [setIsAuthLoading, setUser]);
 
   return <RouterProvider router={router} />;
 }
