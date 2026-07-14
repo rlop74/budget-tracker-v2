@@ -1,11 +1,36 @@
-# Expense and Budget Tracker
+# Frontend Stack
 
-### TechStack
+## Core
+
 - React
-- React-DOM / React-Router
-- TailWind CSS
-- Lucide-React
-- Zustand
-- Material-UI
-- NodeJS
-- ExpressJS
+- TypeScript
+- Vite
+
+## Styling
+
+- Tailwind CSS
+- shadcn/ui
+
+## Routing
+
+- React Router
+
+## State Management
+
+- Zustand (client/UI state)
+- TanStack Query (server state)
+
+## Forms & Validation
+
+- React Hook Form
+- Zod
+
+## API
+
+- Axios or Fetch API
+
+## Infrastructure
+
+- Docker
+- AWS deployment (future)
+
