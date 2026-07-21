@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Dispatch, SetStateAction } from 'react';
 import {
   ArrowLeftRight,
@@ -18,6 +18,9 @@ import {
 } from 'lucide-react';
 
 import { useThemeStore } from '@/store/theme-store';
+import { supabase } from '@/lib/supabase';
+import { useUserStore } from '@/store/user-store';
+import { useAccountDataStore } from '@/store/accountDataStore';
 
 type SidebarProps = {
   showSidebar: boolean;
@@ -53,6 +56,33 @@ export const Sidebar = ({
   ];
 
   const changeTheme = useThemeStore((state) => state.changeTheme);
+  const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
+  const setAllTransactions = useAccountDataStore(
+    (state) => state.setAllTransactions,
+  );
+  const setIsAccountDataLoading = useAccountDataStore(
+    (state) => state.setIsAccountDataLoading,
+  );
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      setUser(null);
+      setAllTransactions([]);
+      setIsAccountDataLoading(true);
+      navigate('/login', { replace: true });
+    } catch (error) {
+      console.error('Logout failed: ', error);
+      alert('Something went wrong');
+    }
+  };
 
   return (
     <>
@@ -110,7 +140,10 @@ export const Sidebar = ({
               <MessageCircleQuestionMark size={20} />
               Help
             </NavLink>
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200">
+            <button
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200"
+              onClick={handleLogout}
+            >
               <LogOut size={20} />
               Logout
             </button>
