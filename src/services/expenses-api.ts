@@ -1,11 +1,11 @@
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 import type { NewExpense, Expense } from '@/types/expense';
 
 export const fetchExpenses = async (
   id: string | number,
 ): Promise<Expense[]> => {
   try {
-    const { data } = await axios.get(`http://localhost:3000/expenses/${id}`);
+    const { data } = await apiClient.get(`/expenses/${id}`);
     return data;
   } catch (err) {
     alert('Something went wrong');
@@ -18,10 +18,7 @@ export const addExpense = async (
   newExpense: NewExpense,
 ): Promise<Expense | undefined> => {
   try {
-    const { data } = await axios.post(
-      'http://localhost:3000/expenses/add-expense',
-      newExpense,
-    );
+    const { data } = await apiClient.post('/expenses/add-expense', newExpense);
     return data;
   } catch (err) {
     console.error('Failed to add expense: ', err);
