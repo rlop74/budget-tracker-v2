@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { ArrowRight, Lock, Mail, ShieldCheck, WalletCards } from 'lucide-react';
 
 import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/user-store';
+import { fetchUser } from '@/services/user-profile-api';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -32,9 +32,7 @@ export const Login = () => {
         return;
       }
 
-      const { data: profile } = await axios.get(
-        `http://localhost:3000/users/${data.user.id}`,
-      );
+      const profile = await fetchUser(data.user.id);
 
       if (!profile) {
         setErrorMessage('Cannot load profile');

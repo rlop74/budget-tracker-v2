@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 
 import { Dialog } from '@/components/Dialog';
 import { useGoals } from '@/store/goals-store';
@@ -31,10 +31,7 @@ export const Goals = () => {
   // handle functions
   const handleAddGoal = async () => {
     try {
-      const { data } = await axios.post(
-        `http://localhost:3000/goals/add-goal`,
-        newGoal,
-      );
+      const { data } = await apiClient.post(`/goals/add-goal`, newGoal);
 
       // update store/UI
       addNewGoal(data);
@@ -55,10 +52,7 @@ export const Goals = () => {
     try {
       if (!goalToEdit) return;
 
-      await axios.patch(
-        `http://localhost:3000/goals/edit-goal/${goalToEdit.id}`,
-        goalToEdit,
-      );
+      await apiClient.patch(`/goals/edit-goal/${goalToEdit.id}`, goalToEdit);
       // const updatedGoals = allGoals.filter((goal) => goal.id !== goalToEdit.id);
 
       // update store/UI and close modal
@@ -75,7 +69,7 @@ export const Goals = () => {
 
   const handleDelete = async (id: Goal['id']) => {
     try {
-      await axios.delete(`http://localhost:3000/goals/delete-goal/${id}`);
+      await apiClient.delete(`/goals/delete-goal/${id}`);
       const updatedGoals = allGoals.filter((goal) => goal.id !== id);
       setAllGoals(updatedGoals);
     } catch (err) {
@@ -88,13 +82,10 @@ export const Goals = () => {
     try {
       if (!goalToIncrease) return;
 
-      await axios.patch(
-        `http://localhost:3000/goals/edit-goal/${goalToIncrease.id}`,
-        {
-          ...goalToIncrease,
-          current_amount: goalToIncrease.current_amount + Number(addGoalAmount),
-        },
-      );
+      await apiClient.patch(`/goals/edit-goal/${goalToIncrease.id}`, {
+        ...goalToIncrease,
+        current_amount: goalToIncrease.current_amount + Number(addGoalAmount),
+      });
 
       // update UI/store
       {
