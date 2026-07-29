@@ -1,11 +1,9 @@
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 import type { UserProfile } from '@/types/userProfile';
 
 export const fetchUser = async (id: string | number): Promise<UserProfile> => {
   try {
-    const { data } = await axios.get<UserProfile>(
-      `http://localhost:3000/users/${id}`,
-    );
+    const { data } = await apiClient.get(`/users/${id}`);
     return data;
   } catch (err) {
     alert('Something went wrong');

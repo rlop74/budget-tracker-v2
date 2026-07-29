@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 
 export const updateIncome = async (
   amount: string | number,
@@ -6,7 +6,7 @@ export const updateIncome = async (
 ): Promise<void> => {
   try {
     // update income
-    await axios.post(`http://localhost:3000/users/update-income/${id}`, {
+    await apiClient.post(`/users/update-income/${id}`, {
       updatedIncome: amount,
     });
   } catch (err) {

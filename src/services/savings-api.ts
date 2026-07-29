@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 import type { NewSavings, Savings } from '@/types/savings';
 
 export const fetchSavings = async (id: string | number): Promise<Savings[]> => {
   try {
-    const { data } = await axios.get(`http://localhost:3000/savings/${id}`);
+    const { data } = await apiClient.get(`/savings/${id}`);
     return data;
   } catch (err) {
     alert('Something went wrong');
@@ -22,10 +22,7 @@ export const addSavings = async (
     return;
   }
   try {
-    const { data } = await axios.post(
-      `http://localhost:3000/savings/new-savings`,
-      newSavings,
-    );
+    const { data } = await apiClient.post(`/savings/new-savings`, newSavings);
     return data;
   } catch (err) {
     alert('Something went wrong');

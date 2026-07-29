@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { RouterProvider } from 'react-router';
 import { router } from '@/routes/router';
 import { supabase } from '@/lib/supabase';
-// import axios from "axios";
 import { useUserStore } from '@/store/user-store';
 import { useAuthStore } from '@/store/authStore';
 import { fetchUser } from '@/services/user-profile-api';

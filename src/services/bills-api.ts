@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 import type { NewBill, Bill } from '@/types/bill';
 
 export const fetchBills = async (): Promise<Bill[]> => {
   try {
-    const { data } = await axios.get<Bill[]>('http://localhost:3000/bills');
+    const { data } = await apiClient.get<Bill[]>('/bills');
     return data;
   } catch (err) {
     console.error('Failed to get bills: ', err);
@@ -17,10 +17,7 @@ export const fetchBills = async (): Promise<Bill[]> => {
 
 export const addBill = async (newBill: NewBill): Promise<Bill> => {
   try {
-    const { data } = await axios.post<Bill>(
-      'http://localhost:3000/bills/add-bill',
-      newBill,
-    );
+    const { data } = await apiClient.post<Bill>('/bills/add-bill', newBill);
     return data;
   } catch (err) {
     console.error('Failed to add bill: ', err);

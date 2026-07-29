@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
-import axios from 'axios';
+import { apiClient } from '@/lib/apiClient';
 
 import { useBills } from '@/store/bills-store';
 import { addBill } from '@/services/bills-api';
@@ -50,7 +50,7 @@ export const Bills = () => {
 
   const handleDeleteBill = async (id: string | number) => {
     try {
-      await axios.delete(`http://localhost:3000/bills/delete-bill/${id}`);
+      await apiClient.delete(`/bills/delete-bill/${id}`);
       const updatedBills = allBills.filter((bill) => bill.id !== id);
       setAllBills(updatedBills);
       setTotalBills(updatedBills);
@@ -64,8 +64,8 @@ export const Bills = () => {
 
   const handleEditBill = async () => {
     try {
-      const { data } = await axios.post(
-        `http://localhost:3000/bills/edit-bill/${billToEdit.id}`,
+      const { data } = await apiClient.post(
+        `/bills/edit-bill/${billToEdit.id}`,
         billToEdit,
       );
 
