@@ -1,11 +1,16 @@
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { apiClient } from '@/lib/apiClient';
 
 import { Dialog } from '@/components/Dialog';
 import { useGoals } from '@/store/goals-store';
 
 import type { Goal, NewGoalForm } from '@/types/goal';
+import {
+  addGoal,
+  deleteGoal,
+  editGoal,
+  increaseGoalAmount,
+} from '@/services/goals-api';
 
 export const Goals = () => {
   // modal states
@@ -31,7 +36,7 @@ export const Goals = () => {
   // handle functions
   const handleAddGoal = async () => {
     try {
-      const { data } = await apiClient.post(`/goals/add-goal`, newGoal);
+      const data = await addGoal(newGoal);
 
       // update store/UI
       addNewGoal(data);
@@ -52,7 +57,7 @@ export const Goals = () => {
     try {
       if (!goalToEdit) return;
 
-      await apiClient.patch(`/goals/edit-goal/${goalToEdit.id}`, goalToEdit);
+      await editGoal(goalToEdit);
       // const updatedGoals = allGoals.filter((goal) => goal.id !== goalToEdit.id);
 
       // update store/UI and close modal
@@ -69,7 +74,7 @@ export const Goals = () => {
 
   const handleDelete = async (id: Goal['id']) => {
     try {
-      await apiClient.delete(`/goals/delete-goal/${id}`);
+      await deleteGoal(id);
       const updatedGoals = allGoals.filter((goal) => goal.id !== id);
       setAllGoals(updatedGoals);
     } catch (err) {
@@ -82,27 +87,16 @@ export const Goals = () => {
     try {
       if (!goalToIncrease) return;
 
-      await apiClient.patch(`/goals/edit-goal/${goalToIncrease.id}`, {
-        ...goalToIncrease,
-        current_amount: goalToIncrease.current_amount + Number(addGoalAmount),
-      });
+      await increaseGoalAmount(goalToIncrease, addGoalAmount);
 
       // update UI/store
-      {
-        /* const updatedGoals = allGoals.filter(
-        (goal) => goal.id !== goalToIncrease.id,
-      );
-     setAllGoals([
-        ...updatedGoals,
-        {
-          ...goalToIncrease,
-          current_amount: goalToIncrease.current_amount + Number(addGoalAmount),
-        },
-      ]); */
-      }
+      const updatedGoal = {
+        ...goalToIncrease,
+        current_amount: goalToIncrease.current_amount + Number(addGoalAmount),
+      };
       setAllGoals(
         allGoals.map((goal) =>
-          goal.id === goalToIncrease.id ? goalToIncrease : goal,
+          goal.id === goalToIncrease.id ? updatedGoal : goal,
         ),
       );
 

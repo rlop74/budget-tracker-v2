@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
-import { apiClient } from '@/lib/apiClient';
 
 import { useBills } from '@/store/bills-store';
-import { addBill } from '@/services/bills-api';
+import { addBill, deleteBill, editBill } from '@/services/bills-api';
 import { Dialog } from '@/components/Dialog';
 import type { Bill } from '@/types/bill';
 
@@ -50,7 +49,7 @@ export const Bills = () => {
 
   const handleDeleteBill = async (id: string | number) => {
     try {
-      await apiClient.delete(`/bills/delete-bill/${id}`);
+      await deleteBill(id);
       const updatedBills = allBills.filter((bill) => bill.id !== id);
       setAllBills(updatedBills);
       setTotalBills(updatedBills);
@@ -64,10 +63,7 @@ export const Bills = () => {
 
   const handleEditBill = async () => {
     try {
-      const { data } = await apiClient.post(
-        `/bills/edit-bill/${billToEdit.id}`,
-        billToEdit,
-      );
+      const data = await editBill(billToEdit.id, billToEdit);
 
       // update store/UI and close modal
       updateBill(data);
