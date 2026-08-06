@@ -11,42 +11,35 @@ export const Header = () => {
       <div className="flex justify-between px-5 py-6">
         {/* left side, greeting */}
         <div className="">
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl font-bold text-text-light dark:text-text-dark">
             Welcome back, {user?.first_name || 'User'}!
           </h1>
-          <p className="mt-1 text-gray-500">
+          <p className="mt-1 text-muted-light dark:text-muted-dark">
             It's the best time to manage your finances
           </p>
         </div>
 
         {/* right side, buttons */}
         <div className="flex items-center gap-1">
-          {/* search bar */}
           <div
-            className={`flex items-center rounded-full border border-gray-400 p-3 cursor-pointer select-none hover:bg-violet-500/50 hover:text-white transition-all duration-300 ease-in-out ${
+            className={`flex items-center rounded-full border p-3 cursor-pointer select-none border-border-light dark:border-border-dark hover:bg-primary-hover/50 text-text-light dark:text-text-dark hover:text-primary-hover transition-all duration-300 ease-in-out ${
               isSearchOpen ? 'w-74 gap-1' : 'w-12'
             }`}
           >
-            <Search
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="text-gray-500"
-            />
+            <Search onClick={() => setIsSearchOpen(!isSearchOpen)} />
             <input
               type="text"
               placeholder="Search transactions, accounts..."
-              className={`rounded-full outline-none transition-all duration-350 ease-in-out ${
-                isSearchOpen ? 'w-full' : 'w-0'
-              }`}
+              className={`rounded-full outline-none transition-all duration-350 ease-in-out bg-transparent text-text-light placeholder:text-muted-light dark:text-text-dark dark:placeholder:text-muted-dark
+                  ${isSearchOpen ? 'w-full' : 'w-0'}`}
             />
           </div>
 
-          {/* notifications */}
-          <button className="flex items-center rounded-full border border-gray-400 p-3 text-gray-500 cursor-pointer hover:bg-violet-500/50 hover:text-white transition-all duration-300 ease-in-out">
+          <button className="flex items-center rounded-full border p-3 cursor-pointer border-border-light dark:border-border-dark text-text-light dark:text-text-dark hover:bg-primary-hover/50 hover:text-primary-hover transition-all duration-300 ease-in-out">
             <Bell />
           </button>
 
-          {/* user profile */}
-          <button className="flex items-center gap-3 rounded-full border border-gray-400 px-4 py-2 cursor-pointer transition hover:border-violet-400 hover:shadow-sm">
+          <button className="flex items-center gap-3 rounded-full border border-border-light dark:border-border-dark px-4 py-2 cursor-pointer transition hover:border-primary-hover hover:shadow-sm text-text-light dark:text-text-dark">
             <img
               src={user?.img}
               alt="User avatar"
@@ -56,7 +49,9 @@ export const Header = () => {
               <div className="text-sm font-medium">
                 {user?.first_name} {user?.last_name}
               </div>
-              <div className="text-xs text-gray-500">{user?.email}</div>
+              <div className="text-xs text-muted-light dark:text-muted-dark">
+                {user?.email}
+              </div>
             </div>
           </button>
         </div>
