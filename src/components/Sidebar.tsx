@@ -58,14 +58,14 @@ export const Sidebar = ({
     <>
       {/* sidebar */}
       <div
-        className={`flex flex-col justify-between list-none bg-gray-900 text-gray-100 h-auto transition-all duration-300 ease-in-out ${
+        className={`flex flex-col justify-between list-none bg-surface-dark text-text-dark h-auto transition-all duration-300 ease-in-out ${
           showSidebar ? 'w-[15%] translate-x-0 p-5' : 'w-0 -translate-x-50 p-0'
         }`}
       >
         <div className="flex flex-col">
           {/* logo */}
           <div className="flex items-center gap-3 mb-10">
-            <Vault size={28} className="text-violet-400" />
+            <Vault size={28} className="text-primary-hover" />
             <span className="text-xl font-semibold tracking-tight">
               Budget Tracker
             </span>
@@ -81,8 +81,8 @@ export const Sidebar = ({
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                       isActive
-                        ? 'bg-violet-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                        ? 'bg-primary-hover text-white'
+                        : 'text-muted-dark hover:bg-border-dark hover:text-text-dark'
                     }`
                   }
                 >
@@ -95,22 +95,25 @@ export const Sidebar = ({
         </div>
 
         {/* bottom section */}
-        <div className="flex flex-col text-m gap-15 border-t border-gray-700 pt-10">
+        <div className="flex flex-col text-m gap-15 border-t border-border-dark pt-10">
           <div>
             <NavLink
               to="/help"
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-violet-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                    ? 'bg-primary-hover text-white'
+                    : 'text-muted-dark hover:bg-border-dark hover:text-text-dark'
                 }`
               }
             >
               <MessageCircleQuestionMark size={20} />
               Help
             </NavLink>
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200">
+            <button
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-dark hover:bg-border-dark hover:text-text-dark transition-all duration-200
+              active:bg-primary-hover"
+            >
               <LogOut size={20} />
               Logout
             </button>
@@ -122,8 +125,8 @@ export const Sidebar = ({
               onClick={() => changeTheme('light')}
               className={`p-2 rounded-lg transition-all ${
                 theme === 'light'
-                  ? 'bg-gray-700 text-yellow-400'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-primary-hover text-warning'
+                  : 'text-muted-dark hover:text-white'
               }`}
             >
               <Sun size={18} />
@@ -132,8 +135,8 @@ export const Sidebar = ({
               onClick={() => changeTheme('dark')}
               className={`p-2 rounded-lg transition-all ${
                 theme === 'dark'
-                  ? 'bg-gray-700 text-blue-400'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-primary-hover text-blue-400'
+                  : 'text-muted-dark hover:text-white'
               }`}
             >
               <Moon size={18} />
@@ -146,7 +149,7 @@ export const Sidebar = ({
       <div className="inline">
         <button
           onClick={() => setShowSidebar(!showSidebar)}
-          className="p-3 bg-gray-800/80 text-white rounded-xl shadow-lg hover:bg-gray-700! transition-all"
+          className="p-3 bg-primary/80 text-white rounded-xl shadow-lg hover:bg-primary-hover transition-all"
         >
           {showSidebar ? (
             <PanelLeftClose size={20} />
