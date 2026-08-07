@@ -5,8 +5,10 @@ import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/user-store';
 import { useAuthStore } from '@/store/authStore';
 import { fetchUser } from '@/services/user-profile-api';
+import { useThemeStore } from '@/store/theme-store';
 
 function App() {
+  const theme = useThemeStore((state) => state.theme);
   const setUser = useUserStore((state) => state.setUser);
   const setIsAuthLoading = useAuthStore((state) => state.setIsAuthLoading);
 
@@ -43,6 +45,15 @@ function App() {
     // useEffect callbacks cannot be async, so run the async session check here.
     void getSession();
   }, [setIsAuthLoading, setUser]);
+
+  // this is for Zustand to be able to add <html class="dark">
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   return <RouterProvider router={router} />;
 }

@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/apiClient';
-import type { Goal } from '@/types/goal';
+import type { Goal, NewGoalForm } from '@/types/goal';
 
 export const fetchGoals = async (): Promise<Goal[]> => {
   try {
@@ -13,4 +13,28 @@ export const fetchGoals = async (): Promise<Goal[]> => {
     // fallback
     throw new Error('Failed to fetch goals');
   }
+};
+
+export const addGoal = async (newGoal: NewGoalForm): Promise<Goal> => {
+  const { data } = await apiClient.post<Goal>(`/goals/add-goal`, newGoal);
+
+  return data;
+};
+
+export const deleteGoal = async (id: Goal['id']): Promise<void> => {
+  await apiClient.delete(`/goals/delete-goal/${id}`);
+};
+
+export const editGoal = async (goalToEdit: Goal): Promise<void> => {
+  await apiClient.patch(`/goals/edit-goal/${goalToEdit.id}`, goalToEdit);
+};
+
+export const increaseGoalAmount = async (
+  goalToIncrease: Goal,
+  addGoalAmount: string | number,
+): Promise<void> => {
+  await apiClient.patch(`/goals/edit-goal/${goalToIncrease.id}`, {
+    ...goalToIncrease,
+    current_amount: goalToIncrease.current_amount + Number(addGoalAmount),
+  });
 };

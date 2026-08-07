@@ -28,3 +28,18 @@ export const addBill = async (newBill: NewBill): Promise<Bill> => {
     throw new Error('Failed to add bill');
   }
 };
+
+export const deleteBill = async (id: string | number): Promise<void> => {
+  await apiClient.delete(`/bills/delete-bill/${id}`);
+};
+
+export const editBill = async (
+  id: string | number,
+  billToEdit: Bill,
+): Promise<Bill> => {
+  const { data } = await apiClient.post<Bill>(
+    `/bills/edit-bill/${id}`,
+    billToEdit,
+  );
+  return data;
+};

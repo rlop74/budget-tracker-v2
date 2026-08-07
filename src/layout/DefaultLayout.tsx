@@ -13,8 +13,8 @@ export const DefaultLayout = () => {
     <div
       className={`flex h-screen transition-colors duration-300 ${
         theme === 'dark'
-          ? 'bg-gray-950 text-gray-100' // Main recommendation
-          : 'bg-gray-50 text-gray-900' // Light mode (add this for consistency)
+          ? 'bg-bg-dark text-text-dark'
+          : 'bg-[var(--color-bg-light)] text-[var(--color-text-light)]'
       }`}
     >
       <Sidebar
@@ -27,12 +27,24 @@ export const DefaultLayout = () => {
           <div className="flex items-center justify-center min-h-screen">
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-violet-500"></div>
+                <div
+                  className={`animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 ${
+                    theme === 'dark' ? 'border-primary-hover' : 'border-primary'
+                  }`}
+                ></div>
               </div>
-              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+              <p
+                className={`text-lg font-medium ${
+                  theme === 'dark' ? 'text-text-dark' : 'text-text-light'
+                }`}
+              >
                 Loading...
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              <p
+                className={`text-sm mt-2 ${
+                  theme === 'dark' ? 'text-muted-dark' : 'text-muted-light'
+                }`}
+              >
                 Please wait while we prepare everything
               </p>
             </div>
