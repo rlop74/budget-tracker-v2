@@ -28,6 +28,7 @@ This is an ongoing personal project that I use to practice full-stack developmen
 The backend for this project is maintained in a separate repository:
 
 [expense-budget-tracker-backend](https://github.com/rlop74/expense-budget-tracker-backend)
+
 The frontend communicates with an Express API, which integrates with Supabase/PostgreSQL for authentication and application data.
 
 ### Development
